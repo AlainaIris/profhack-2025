@@ -1,25 +1,35 @@
-// cards.js
+export const cardDeck = [
+  '♠A', '♠2', '♠3', '♠4', '♠5', '♠6', '♠7', '♠8', '♠9', '♠10', '♠J', '♠Q', '♠K', 
+  '♥A', '♥2', '♥3', '♥4', '♥5', '♥6', '♥7', '♥8', '♥9', '♥10', '♥J', '♥Q', '♥K', 
+  '♦A', '♦2', '♦3', '♦4', '♦5', '♦6', '♦7', '♦8', '♦9', '♦10', '♦J', '♦Q', '♦K', 
+  '♣A', '♣2', '♣3', '♣4', '♣5', '♣6', '♣7', '♣8', '♣9', '♣10', '♣J', '♣Q', '♣K'
+];
 
-const suitMap = {
-  '♠': 'spades',
-  '♥': 'hearts',
-  '♦': 'diamonds',
-  '♣': 'clubs'
-};
+export function shuffleDeck(deck) {
+  return [...deck].sort(() => Math.random() - 0.5);
+}
 
-const valueMap = {
-  'A': 'ace',
-  'J': 'jack',
-  'Q': 'queen',
-  'K': 'king'
-};
+export function dealCard(deck) {
+  return deck.pop();
+}
 
-// Convert card symbol to filename format
 export function mapCardToImage(card) {
-  const suitSymbol = card[0];   // e.g., '♠'
-  const valueSymbol = card.slice(1);  // e.g., 'A', '10'
+  const suitMap = {
+    '♠': 'spades',
+    '♥': 'hearts',
+    '♦': 'diamonds',
+    '♣': 'clubs'
+  };
 
-  const suit = suitMap[suitSymbol];
-  const value = valueMap[valueSymbol] || valueSymbol;  // Handle face cards
-  return `/PNG-cards-1.3/${value}_of_${suit}.png`;   // Adjust path to your folder
+  const valueMap = {
+    'A': 'ace',
+    'J': 'jack',
+    'Q': 'queen',
+    'K': 'king'
+  };
+
+  const suit = suitMap[card[0]];
+  const value = valueMap[card.slice(1)] || card.slice(1);
+
+  return `/assets/PNG-cards-1.3/${value}_of_${suit}.png`;
 }

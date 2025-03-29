@@ -1,38 +1,28 @@
 .blackjack-container {
     text-align: center;
-    margin-top: 30px;
-  }
-  
-  .cards {
+    margin-top: 20px;
+}
+
+.cards {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 20px 0;
-  }
-  
-  .card-img {
+    margin: 10px 0;
+}
+
+.card {
     width: 100px;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
-  }
-  
-  .card-img:hover {
-    transform: scale(1.1);
-  }
-  
-  .actions button {
+    margin: 5px;
+}
+
+.actions button {
     margin: 10px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    transition: 0.2s;
-  }
-  
-  .actions button:hover {
-    background-color: #28a745;
-    color: white;
-  }
-  
+}
+
+.game-outcome {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
