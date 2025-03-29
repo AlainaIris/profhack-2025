@@ -6,6 +6,8 @@ import {useState} from 'react';
 import Home from './Home';
 import GameSelect from './GameSelect';
 import Roulette from './Roulette';
+import Blackjack from './Blackjack';
+import Dice from './Dice';
 
 //data will be the string we send from our server
 const apiCall = () => {
@@ -25,7 +27,8 @@ export default function App() {
 		<title>Casino</title>
 		</header>
 		{
-			gameState == 0 ? <Home setter={setGameState} /> : gameState == 1 ? <GameSelect setter={setGameState}/> : <Roulette />
+			gameState == 0 ? <Home setter={setGameState} /> : gameState == 1 ? <GameSelect setter={setGameState}/> :
+			gameState == 2 ? <Blackjack /> : gameState == 3 ? <Roulette /> : gameState == 4 ? <Dice/> : <></>
 		}
 		</div>
 	);
