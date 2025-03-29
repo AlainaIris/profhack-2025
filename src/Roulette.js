@@ -1,6 +1,7 @@
-export default function Roulette {
+export default function Roulette() {
 	return (
-		<div>
+		<div id='roulette'>
+			<h1>Roulette</h1>
 		</div>
 	)
 }
