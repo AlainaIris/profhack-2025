@@ -3,45 +3,36 @@
     margin-top: 30px;
   }
   
-  .bet-section {
-    margin-bottom: 20px;
-  }
-  
-  .bet-button {
-    margin: 10px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .game-section {
-    margin-bottom: 30px;
-  }
-  
   .cards {
-    margin-top: 10px;
-    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .card-img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+  }
+  
+  .card-img:hover {
+    transform: scale(1.1);
   }
   
   .actions button {
     margin: 10px;
-    padding: 10px;
+    padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    transition: 0.2s;
   }
   
-  .game-outcome {
-    margin-top: 20px;
-  }
-  
-  .reset-button {
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .current-bet {
-    margin-top: 20px;
+  .actions button:hover {
+    background-color: #28a745;
+    color: white;
   }
   

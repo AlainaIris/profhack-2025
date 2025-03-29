@@ -1,22 +1,25 @@
 // cards.js
-export const cardDeck = [
-  '♠A', '♠2', '♠3', '♠4', '♠5', '♠6', '♠7', '♠8', '♠9', '♠10', '♠J', '♠Q', '♠K', 
-  '♥A', '♥2', '♥3', '♥4', '♥5', '♥6', '♥7', '♥8', '♥9', '♥10', '♥J', '♥Q', '♥K', 
-  '♦A', '♦2', '♦3', '♦4', '♦5', '♦6', '♦7', '♦8', '♦9', '♦10', '♦J', '♦Q', '♦K', 
-  '♣A', '♣2', '♣3', '♣4', '♣5', '♣6', '♣7', '♣8', '♣9', '♣10', '♣J', '♣Q', '♣K'
-];
 
-// Function to shuffle the deck
-export function shuffleDeck(deck) {
-  let shuffledDeck = [...deck];
-  for (let i = shuffledDeck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledDeck[i], shuffledDeck[j]] = [shuffledDeck[j], shuffledDeck[i]];
-  }
-  return shuffledDeck;
-}
+const suitMap = {
+  '♠': 'spades',
+  '♥': 'hearts',
+  '♦': 'diamonds',
+  '♣': 'clubs'
+};
 
-// Function to deal a card
-export function dealCard(deck) {
-  return deck.pop();  // remove and return the last card in the deck
+const valueMap = {
+  'A': 'ace',
+  'J': 'jack',
+  'Q': 'queen',
+  'K': 'king'
+};
+
+// Convert card symbol to filename format
+export function mapCardToImage(card) {
+  const suitSymbol = card[0];   // e.g., '♠'
+  const valueSymbol = card.slice(1);  // e.g., 'A', '10'
+
+  const suit = suitMap[suitSymbol];
+  const value = valueMap[valueSymbol] || valueSymbol;  // Handle face cards
+  return `/PNG-cards-1.3/${value}_of_${suit}.png`;   // Adjust path to your folder
 }
