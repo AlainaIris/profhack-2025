@@ -1,7 +1,6 @@
 import axios from 'axios';
 import './App.css';
 import useSSE from './useSSE';
-import logo from './casino.jpg';
 import {useState} from 'react';
 import Home from './Home';
 import GameSelect from './GameSelect';

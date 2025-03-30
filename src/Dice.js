@@ -136,6 +136,7 @@ ${point} again.`;
 
 	return (
 		<div id='craps'>
+			<div id="craps-title">Craps</div>
 		{
 			betSet ?
 			<div>

@@ -19,18 +19,20 @@ body, html {
 }
 
 .blackjack-wrap {
-	height: 80%;
-	color: white;
+  height: 80%;
+  color: white;
 }
 
 .hands {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between; /* This spreads the hands apart */
   width: 100%;
+  margin-top: 60px; /* Increased space from other content */
 }
 
 .player-hand, .dealer-hand {
   text-align: center;
+  padding: 0 80px; /* Increased space on each side of the hands */
 }
 
 img {

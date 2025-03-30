@@ -1,20 +1,41 @@
-#craps {
+/* Global Styles */
+body, html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden; /* Prevents scrollbars */
+  }
+  
+  #craps {
 	background-image: url('./table_background.png');
 	background-size: 100% 98%;
 	position: absolute;
 	width: 100vw;
 	height: 100vh;
-}
-
-#die-set {
+  }
+  
+  /* Title Styles */
+  #craps-title {
+	font-size: 48px;
+	color: white;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add contrast */
+	position: absolute;
+	top: 10%; /* Adjust as needed for positioning */
+	left: 50%;
+	transform: translateX(-50%); /* Centers the title horizontally */
+	z-index: 10;
+  }
+  
+  /* Dice Set Styles */
+  #die-set {
 	display: grid;
 	width: 60%;
 	margin-left: 20%;
 	grid-template-columns: 1fr 1fr;
 	height: 40vh;
-}
-
-.dice {
+  }
+  
+  .dice {
 	position: relative;
 	left: 35%;
 	top: 40%;
@@ -23,12 +44,13 @@
 	height: 60px;
 	width: 60px;
 	border-radius: 8px;
-box-shadow: 6px 3px 3px rgba(70, 30, 30, 0.7);
-}
-
-.dice-num {
+	box-shadow: 6px 3px 3px rgba(70, 30, 30, 0.7);
+  }
+  
+  .dice-num {
 	color: white;
 	font-size: 40px;
 	margin: 0px;
 	line-height: 60px;
-}
+  }
+  
