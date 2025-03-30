@@ -44,14 +44,19 @@ button {
   margin: 10px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #4CAF50;
+  
+  /* Slight backdrop behind buttons */
+  background-color: #388e3c;  /* Darker, contrasted green */
   color: white;
   border: none;
   border-radius: 5px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);  /* Depth effect */
+  transition: all 0.3s ease-in-out;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #45a049;  /* Slightly lighter green on hover */
+  transform: scale(1.1);      /* Slight enlargement effect */
 }
 
 button:disabled {
