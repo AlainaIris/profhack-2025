@@ -54,9 +54,9 @@ export default function App() {
 		</header>
 		{
 			gameState == 0 ? <Home setter={setGameState} promptSetters={pS} /> : gameState == 1 ? <GameSelect pSetters={pS} setter={setGameState}/> :
-			gameState == 2 ? <Blackjack streak={streak} setStreak={setStreak} wallet={wallet} setWallet={setWallet} /> :
+			gameState == 2 ? <Blackjack pSetters={pS} streak={streak} setStreak={setStreak} wallet={wallet} setWallet={setWallet} /> :
 			gameState == 3 ?
-			<Dice streak={streak} setStreak={setStreak} wallet={wallet} setWallet={setWallet}/> : <></>
+			<Dice pSetters={pS} streak={streak} setStreak={setStreak} wallet={wallet} setWallet={setWallet}/> : <></>
 		}
 		</div>
 	);

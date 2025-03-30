@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './Blackjack.css';
 import { shuffleDeck, dealCard, calculateScore } from './cards';
 import BetMenu from './BetMenu'
+import {
+        WIN_1,WIN_2,WIN_3,LOSE_1,LOSE_2,LOSE_3,WINNING_STREAK_1,WINNING_STREAK_2,WINNING_STREAK_3,LOSING_STREAK_1,LOSING_STREAK_2,LOSING_STREAK_3
+} from './text'
 
-function Blackjack({wallet, setWallet, streak, setStreak}) {
+
+function Blackjack({wallet, setWallet, streak, setStreak, pSetters}) {
 	const [deck, setDeck] = useState([]);
 	const [playerHand, setPlayerHand] = useState([]);
 	const [dealerHand, setDealerHand] = useState([]);
@@ -20,6 +24,40 @@ function Blackjack({wallet, setWallet, streak, setStreak}) {
 		setBet(parseInt(bet));
 		setBetSet(true);
 	}
+
+
+        function textSet(streakI) {
+                let text;
+                if (streakI == 1) {
+                        text = randWin();
+                } else if (streakI == 2) {
+                        text = WINNING_STREAK_1;
+                } else if (streakI == 3) {
+                        text = WINNING_STREAK_2;
+                } else if (streakI > 3) {
+                        text = WINNING_STREAK_3;
+                } else if (streakI == -1) {
+                        text = randLose();
+                } else if (streakI == -2) {
+                        text = LOSING_STREAK_1;
+                } else if (streakI == -3) {
+                        text = LOSING_STREAK_2;
+                } else {
+                        text = LOSING_STREAK_3;
+                }
+                console.log(1);
+                pSetters[0](text);
+        }
+
+	        function randWin() {
+                let wins = [WIN_1, WIN_2, WIN_3];
+                return wins[Math.floor(Math.random() * 3)];
+        }
+
+        function randLose() {
+                let losses = [LOSE_1, LOSE_2, LOSE_3];
+                return losses[Math.floor(Math.random() * 3)];
+        }
 
 
 	// 🔥 Initialize the deck and deal hands on first render
@@ -125,23 +163,29 @@ function Blackjack({wallet, setWallet, streak, setStreak}) {
 		setGameOver(true);
 	};
 
-	function addMoney() {
-		if (streak > 0) {
-		setStreak(streak + 1)
-		} else {
-		setStreak(1)
-		}
-		setWallet(wallet + bet);
-	}
+        function addMoney() {
+                let streakNew;
+                if (streak > 0) {
+                streakNew = streak + 1;
+                } else {
+                streakNew = 1;
+                }
+                setStreak(streakNew);
+                textSet(streakNew);
+                setWallet(wallet + bet);
+        }
 
-	function loseMoney() {
-		if (streak > 0) {
-		setStreak(-1)
-		} else {
-		setStreak(streak - 1)
-		}
-		setWallet(wallet - bet);
-	}
+        function loseMoney() {
+                let streakNew;
+                if (streak >= 0) {
+                streakNew = -1;
+                } else {
+                streakNew = streak - 1
+                }
+                setStreak(streakNew);
+                setWallet(wallet - bet);
+                textSet(streakNew);
+        }
 
 	return (
 		<div className="blackjack-container">
@@ -182,7 +226,7 @@ function Blackjack({wallet, setWallet, streak, setStreak}) {
 			{gameOver && <button onClick={startGame}>Restart Game</button>}
 			</div>
 
-			<p>{message}</p> </> : <BetMenu setBet={enterBet} wallet={wallet} />}
+			<p>{message}</p> </> : <BetMenu setBet={enterBet} wallet={wallet} pSetters={pSetters}/>}
 		</div>
 		</div>
 	);

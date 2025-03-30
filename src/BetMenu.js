@@ -1,4 +1,7 @@
-export default function BetMenu({setBet, wallet}) {
+import {BET_SET} from './text'
+export default function BetMenu({setBet, wallet, pSetters}) {
+	pSetters[0](BET_SET);
+
 	function applyBet() {
 		let bet = document.getElementById('bet-total').value;
 		if (bet < 100 || bet == null) {

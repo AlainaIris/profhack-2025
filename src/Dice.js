@@ -3,6 +3,9 @@ import './craps.css'
 import RollingDie from './RollingDie';
 import StaticDie from './StaticDie';
 import BetMenu from './BetMenu';
+import {
+	WIN_1,WIN_2,WIN_3,LOSE_1,LOSE_2,LOSE_3,WINNING_STREAK_1,WINNING_STREAK_2,WINNING_STREAK_3,LOSING_STREAK_1,LOSING_STREAK_2,LOSING_STREAK_3
+} from './text'
 // Dice Gambling Game
 
 
@@ -13,7 +16,7 @@ function rollDie() {
 }
 
 // Function to roll two dice
-export default function Dice({wallet, setWallet, streak, setStreak}) {
+export default function Dice({wallet, setWallet, streak, setStreak, pSetters}) {
 	const [buttonText, setButtonText] = useState("Roll");
 	const [resultText, setResultText] = useState("Roll to begin");
 	const [betSet, setBetSet] = useState(false);
@@ -31,23 +34,62 @@ export default function Dice({wallet, setWallet, streak, setStreak}) {
 	}
 
 	function addMoney() {
+		let streakNew;
 		if (streak > 0) {
-		setStreak(streak + 1);
+		streakNew = streak + 1;
 		} else {
-		setStreak(1);
+		streakNew = 1;
 		}
+		setStreak(streakNew);
+		textSet(streakNew);
 		setPoint(0);
 		setWallet(wallet + bet);
 	}
 
 	function loseMoney() {
-		if (streak > 0) {
-		setStreak(-1);
+		let streakNew;
+		if (streak >= 0) {
+		streakNew = -1;
 		} else {
-		setStreak(streak - 1);
+		streakNew = streak - 1
 		}
+		setStreak(streakNew);
 		setPoint(0);
 		setWallet(wallet - bet);
+		textSet(streakNew);
+	}
+
+	function randWin() {
+		let wins = [WIN_1, WIN_2, WIN_3];
+		return wins[Math.floor(Math.random() * 3)];
+	}
+
+	function randLose() {
+		let losses = [LOSE_1, LOSE_2, LOSE_3];
+		return losses[Math.floor(Math.random() * 3)];
+	}
+
+	function textSet(streakI) {
+		let text;
+		if (streakI == 1) {
+			text = randWin();
+		} else if (streakI == 2) {
+			text = WINNING_STREAK_1;
+		} else if (streakI == 3) {
+			text = WINNING_STREAK_2;
+		} else if (streakI > 3) {
+			text = WINNING_STREAK_3;
+		} else if (streakI == -1) {
+			text = randLose();
+		} else if (streakI == -2) {
+			text = LOSING_STREAK_1;
+		} else if (streakI == -3) {
+			text = LOSING_STREAK_2;
+		} else {
+			text = LOSING_STREAK_3;
+		}
+		console.log(1);
+		pSetters[0](text);
 	}
 
 	function checkRoll() {
@@ -59,10 +101,12 @@ export default function Dice({wallet, setWallet, streak, setStreak}) {
 			if (roll === 7 || roll === 11) {
 				message = "You win! You rolled 7 or 11.";
 				gameOver = true;
+				addMoney();
 			} else if (roll === 2 || roll === 3 || roll
 				=== 12) {
 				message = "You lose! You rolled 2, 3, or 12.";
 				gameOver = true;
+				loseMoney();
 			} else {
 				setPoint(roll);  // Set the point
 				message = `Your point is ${roll}. Roll Again.`;
@@ -108,7 +152,7 @@ ${point} again.`;
 				<p>{resultText}</p>
 				<button onClick={() => checkRoll()}>{buttonText}</button>
 			</div>	 :
-			<BetMenu setBet={enterBet} wallet={wallet}/>
+			<BetMenu pSetters={pSetters} setBet={enterBet} wallet={wallet}/>
 		}
 		</div>
 	)

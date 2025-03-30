@@ -10,6 +10,12 @@ body {
 nav {
 	position: absolute;
 	z-index: 3;
+	width: 16vw;
+	height: 80vh;
+	top: 10vh;
+	display: grid;
+	background-color: red;
+	grid-template-rows: 20vh 20vh 20vh 20vh;
 }
 
 #bet-menu {
