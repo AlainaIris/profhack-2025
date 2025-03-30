@@ -1,7 +1,8 @@
 import {useState} from 'react'
 import './craps.css'
 import RollingDie from './RollingDie';
-import StaticDie from './StaticDie'
+import StaticDie from './StaticDie';
+import BetMenu from './BetMenu';
 // Dice Gambling Game
 
 
@@ -12,7 +13,7 @@ function rollDie() {
 }
 
 // Function to roll two dice
-export default function Dice({wallet, setWallet}) {
+export default function Dice({wallet, setWallet, streak, setStreak}) {
 	const [buttonText, setButtonText] = useState("Roll");
 	const [resultText, setResultText] = useState("Roll to begin");
 	const [betSet, setBetSet] = useState(false);
@@ -30,11 +31,21 @@ export default function Dice({wallet, setWallet}) {
 	}
 
 	function addMoney() {
+		if (streak > 0) {
+		setStreak(streak + 1);
+		} else {
+		setStreak(1);
+		}
 		setPoint(0);
 		setWallet(wallet + bet);
 	}
 
 	function loseMoney() {
+		if (streak > 0) {
+		setStreak(-1);
+		} else {
+		setStreak(streak - 1);
+		}
 		setPoint(0);
 		setWallet(wallet - bet);
 	}
@@ -74,8 +85,7 @@ ${point} again.`;
 		setResultText(message);
 	}
 
-	function enterBet() {
-		let bet = document.getElementById('bet-total').value;
+	function enterBet(bet) {
 		setBet(parseInt(bet));
 		setBetSet(true);
 	}
@@ -98,10 +108,7 @@ ${point} again.`;
 				<p>{resultText}</p>
 				<button onClick={() => checkRoll()}>{buttonText}</button>
 			</div>	 :
-				<div id='bet-menu'>
-			<input id='bet-total' type='number' min='100' max='5000'/>
-			<button onClick={() => enterBet()}>Enter Bet</button>
-				</div>
+			<BetMenu setBet={enterBet} wallet={wallet}/>
 		}
 		</div>
 	)

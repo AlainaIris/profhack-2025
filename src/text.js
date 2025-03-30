@@ -13,6 +13,7 @@ const WINNING_STREAK_3 = "Well it must be your lucky night, keep this up and weâ
 const WIN_1 = "Well looks like you won, good job!";
 const WIN_2 = "Winner winner chicken dinner!";
 const WIN_3 = "And we have a winner, congratulations!";
+const BET_SET = "What would you like to bet? Minimum is 100 and maximum is 1000";
 
 // Exporting the constants
 export {
@@ -29,5 +30,6 @@ export {
   WINNING_STREAK_3,
   WIN_1,
   WIN_2,
-  WIN_3
+  WIN_3,
+  BET_SET,
 };

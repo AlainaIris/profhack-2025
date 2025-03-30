@@ -1,4 +1,12 @@
-export default function Home({ setter }) {
+import point from './dealer/pointer.png'
+
+export default function Home({ setter, promptSetters }) {
+
+	function setScreen() {
+		setter(1);
+		promptSetters[0]("");
+		promptSetters[1](point);
+	}
 	return (
 		<div id='home'>
 		<div id='title'>
@@ -8,7 +16,7 @@ export default function Home({ setter }) {
 		</div>
 		</div>
 		<div id='play-info'>
-		<button id='play-button' onClick={() => setter(1)}>Play Now!</button>
+		<button id='play-button' onClick={() => setScreen()}>Play Now!</button>
 		</div>
 		</div>
 	)

@@ -1,9 +1,9 @@
-export default function Nav({wallet}) {
+export default function Nav({wallet, setScreen}) {
 	return (
 		<nav>
-			<div>Home</div>
-			<div>Blackjack</div>
-			<div>Craps</div>
+			<div onClick={() => setScreen(0)}>Home</div>
+			<div onClick={() => setScreen(2)}>Blackjack</div>
+			<div onClick={() => setScreen(3)}>Craps</div>
 			<div>
 				Money: {wallet}
 			</div>

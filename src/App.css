@@ -24,6 +24,32 @@ html {
 	z-index: 2;
 }
 
+#dealer-prompt {
+	display: grid;
+	grid-template-columns: 25% 75%;
+	position: absolute;
+	width: 60vw;
+	z-index: 4;
+}
+
+#dealer-img {
+	height: auto;
+	width: 100%;
+	box-shadow: none;
+}
+
+#dealer-text {
+	color: black;
+	text-shadow: none;
+	font-size: 20px;
+	width: 100%;
+	background-color: #CCC;
+	padding: 20px 10px;
+}
+
+#dealer-img {
+}
+
 #home {
 	display: grid;
 	grid-template-columns: 60% 40%;

@@ -18,6 +18,11 @@ body, html {
   padding: 20px;
 }
 
+.blackjack-wrap {
+	height: 80%;
+	color: white;
+}
+
 .hands {
   display: flex;
   justify-content: space-around;

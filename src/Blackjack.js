@@ -1,158 +1,191 @@
 import React, { useState, useEffect } from 'react';
 import './Blackjack.css';
 import { shuffleDeck, dealCard, calculateScore } from './cards';
+import BetMenu from './BetMenu'
 
-function Blackjack() {
-  const [deck, setDeck] = useState([]);
-  const [playerHand, setPlayerHand] = useState([]);
-  const [dealerHand, setDealerHand] = useState([]);
-  const [playerScore, setPlayerScore] = useState(0);
-  const [dealerScore, setDealerScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const [message, setMessage] = useState('');
-  const [showDealerCard, setShowDealerCard] = useState(false);
+function Blackjack({wallet, setWallet, streak, setStreak}) {
+	const [deck, setDeck] = useState([]);
+	const [playerHand, setPlayerHand] = useState([]);
+	const [dealerHand, setDealerHand] = useState([]);
+	const [playerScore, setPlayerScore] = useState(0);
+	const [dealerScore, setDealerScore] = useState(0);
+	const [gameOver, setGameOver] = useState(false);
+	const [betSet, setBetSet] = useState(false);
+	const [bet, setBet] = useState(0);
 
-  // 🔥 Initialize the deck and deal hands on first render
-  useEffect(() => {
-    const newDeck = shuffleDeck();
-    setDeck(newDeck);
+	const [message, setMessage] = useState('');
+	const [showDealerCard, setShowDealerCard] = useState(false);
 
-    // Automatically deal initial hands once the deck is set
-    if (newDeck.length >= 4) {
-      const playerStartingHand = [dealCard(newDeck), dealCard(newDeck)];
-      const dealerStartingHand = [dealCard(newDeck), dealCard(newDeck)];
+	function enterBet(bet) {
+		setBet(parseInt(bet));
+		setBetSet(true);
+	}
 
-      setPlayerHand(playerStartingHand);
-      setDealerHand(dealerStartingHand);
 
-      setPlayerScore(calculateScore(playerStartingHand));
-      setDealerScore(calculateScore([dealerStartingHand[0]]));  // Hide the second card's value
-    }
-  }, []);
+	// 🔥 Initialize the deck and deal hands on first render
+	useEffect(() => {
+		const newDeck = shuffleDeck();
+		setDeck(newDeck);
 
-  const startGame = () => {
-    const newDeck = shuffleDeck();
+		// Automatically deal initial hands once the deck is set
+		if (newDeck.length >= 4) {
+			const playerStartingHand = [dealCard(newDeck), dealCard(newDeck)];
+			const dealerStartingHand = [dealCard(newDeck), dealCard(newDeck)];
 
-    if (newDeck.length >= 4) {
-      const playerStartingHand = [dealCard(newDeck), dealCard(newDeck)];
-      const dealerStartingHand = [dealCard(newDeck), dealCard(newDeck)];
+			setPlayerHand(playerStartingHand);
+			setDealerHand(dealerStartingHand);
 
-      setDeck(newDeck);
-      setPlayerHand(playerStartingHand);
-      setDealerHand(dealerStartingHand);
+			setPlayerScore(calculateScore(playerStartingHand));
+			setDealerScore(calculateScore([dealerStartingHand[0]]));  // Hide the second card's value
+		}
+	}, []);
 
-      setPlayerScore(calculateScore(playerStartingHand));
-      setDealerScore(calculateScore([dealerStartingHand[0]]));  // Show only face-up card
+	const startGame = () => {
+		const newDeck = shuffleDeck();
 
-      setShowDealerCard(false);
-      setGameOver(false);
-      setMessage('');
-    }
-  };
+		if (newDeck.length >= 4) {
+			const playerStartingHand = [dealCard(newDeck), dealCard(newDeck)];
+			const dealerStartingHand = [dealCard(newDeck), dealCard(newDeck)];
 
-  const hit = () => {
-    if (gameOver) return;
+			setDeck(newDeck);
+			setPlayerHand(playerStartingHand);
+			setDealerHand(dealerStartingHand);
 
-    if (deck.length === 0) {
-      setMessage("No more cards in the deck!");
-      return;
-    }
+			setPlayerScore(calculateScore(playerStartingHand));
+			setDealerScore(calculateScore([dealerStartingHand[0]]));  // Show only face-up card
 
-    const newDeck = [...deck];
-    const newCard = dealCard(newDeck);
+			setShowDealerCard(false);
+			setGameOver(false);
+			setMessage('');
+		}
+	};
 
-    if (!newCard) {
-      setMessage("No more cards in the deck!");
-      return;
-    }
+	const hit = () => {
+		if (gameOver) return;
 
-    const newPlayerHand = [...playerHand, newCard];
-    const newScore = calculateScore(newPlayerHand);
+		if (deck.length === 0) {
+			setMessage("No more cards in the deck!");
+			return;
+		}
 
-    setDeck(newDeck);
-    setPlayerHand(newPlayerHand);
-    setPlayerScore(newScore);
+		const newDeck = [...deck];
+		const newCard = dealCard(newDeck);
 
-    if (newScore > 21) {
-      setMessage('You bust! Dealer wins.');
-      setGameOver(true);
-      setShowDealerCard(true);  // Reveal hidden card at end of game
-    }
-  };
+		if (!newCard) {
+			setMessage("No more cards in the deck!");
+			return;
+		}
 
-  const stand = () => {
-    if (gameOver) return;
+		const newPlayerHand = [...playerHand, newCard];
+		const newScore = calculateScore(newPlayerHand);
 
-    setShowDealerCard(true);  // Reveal hidden card
+		setDeck(newDeck);
+		setPlayerHand(newPlayerHand);
+		setPlayerScore(newScore);
 
-    let newDealerHand = [...dealerHand];
-    let newDeck = [...deck];
-    let newDealerScore = calculateScore(newDealerHand);
+		if (newScore > 21) {
+			setMessage('You bust! Dealer wins.');
+			setGameOver(true);
+			setShowDealerCard(true);  // Reveal hidden card at end of game
+			loseMoney();
+		}
+	};
 
-    // Dealer logic: hit until 17 or higher
-    while (newDealerScore < 17 && newDeck.length > 0) {
-      const newCard = dealCard(newDeck);
-      newDealerHand.push(newCard);
-      newDealerScore = calculateScore(newDealerHand);
-    }
+	const stand = () => {
+		if (gameOver) return;
 
-    setDeck(newDeck);
-    setDealerHand(newDealerHand);
-    setDealerScore(newDealerScore);
+		setShowDealerCard(true);  // Reveal hidden card
 
-    // Determine the winner
-    if (newDealerScore > 21 || playerScore > newDealerScore) {
-      setMessage('You win!');
-    } else if (playerScore === newDealerScore) {
-      setMessage('It\'s a draw!');
-    } else {
-      setMessage('Dealer wins!');
-    }
+		let newDealerHand = [...dealerHand];
+		let newDeck = [...deck];
+		let newDealerScore = calculateScore(newDealerHand);
 
-    setGameOver(true);
-  };
+		// Dealer logic: hit until 17 or higher
+		while (newDealerScore < 17 && newDeck.length > 0) {
+			const newCard = dealCard(newDeck);
+			newDealerHand.push(newCard);
+			newDealerScore = calculateScore(newDealerHand);
+		}
 
-  return (
-    <div className="blackjack-container">
-      <h1>Blackjack</h1>
+		setDeck(newDeck);
+		setDealerHand(newDealerHand);
+		setDealerScore(newDealerScore);
 
-      <div className="hands">
-        {/* Player's Hand */}
-        <div className="player-hand">
-          <h2>Player's Hand</h2>
-          {playerHand.map((card, index) => (
-            <img key={index} src={`./PNG-cards-1.3/${card}.png`} alt={card} />
-          ))}
-          <p>Score: {playerScore}</p>
-        </div>
+		// Determine the winner
+		if (newDealerScore > 21 || playerScore > newDealerScore) {
+			setMessage('You win!');
+			addMoney();
+		} else if (playerScore === newDealerScore) {
+			setMessage('It\'s a draw!');
+		} else {
+			setMessage('Dealer wins!');
+			loseMoney();
+		}
 
-        {/* Dealer's Hand */}
-        <div className="dealer-hand">
-          <h2>Dealer's Hand</h2>
-          {dealerHand.map((card, index) => (
-            <img
-              key={index}
-              src={
-                index === 1 && !showDealerCard
-                  ? './PNG-cards-1.3/none_of_hidden.png'  // Hidden card image
-                  : `./PNG-cards-1.3/${card}.png`
-              }
-              alt={index === 1 && !showDealerCard ? 'Hidden Card' : card}
-            />
-          ))}
-          <p>Score: {showDealerCard ? dealerScore : '?'}</p>
-        </div>
-      </div>
+		setGameOver(true);
+	};
 
-      <div className="actions">
-        <button onClick={hit} disabled={gameOver}>Hit</button>
-        <button onClick={stand} disabled={gameOver}>Stand</button>
-        {gameOver && <button onClick={startGame}>Restart Game</button>}
-      </div>
+	function addMoney() {
+		if (streak > 0) {
+		setStreak(streak + 1)
+		} else {
+		setStreak(1)
+		}
+		setWallet(wallet + bet);
+	}
 
-      <p>{message}</p>
-    </div>
-  );
+	function loseMoney() {
+		if (streak > 0) {
+		setStreak(-1)
+		} else {
+		setStreak(streak - 1)
+		}
+		setWallet(wallet - bet);
+	}
+
+	return (
+		<div className="blackjack-container">
+		<div className="blackjack-wrap">
+		<h1>Blackjack</h1>
+		{betSet ? <>
+			<div className="hands">
+			{/* Player's Hand */}
+			<div className="player-hand">
+			<h2>Player's Hand</h2>
+			{playerHand.map((card, index) => (
+				<img key={index} src={`./PNG-cards-1.3/${card}.png`} alt={card} />
+			))}
+			<p>Score: {playerScore}</p>
+			</div>
+
+			{/* Dealer's Hand */}
+			<div className="dealer-hand">
+			<h2>Dealer's Hand</h2>
+			{dealerHand.map((card, index) => (
+				<img
+				key={index}
+				src={
+					index === 1 && !showDealerCard
+					? './PNG-cards-1.3/none_of_hidden.png'  // Hidden card image
+					: `./PNG-cards-1.3/${card}.png`
+				}
+				alt={index === 1 && !showDealerCard ? 'Hidden Card' : card}
+				/>
+			))}
+			<p>Score: {showDealerCard ? dealerScore : '?'}</p>
+			</div>
+			</div>
+
+			<div className="actions">
+			<button onClick={hit} disabled={gameOver}>Hit</button>
+			<button onClick={stand} disabled={gameOver}>Stand</button>
+			{gameOver && <button onClick={startGame}>Restart Game</button>}
+			</div>
+
+			<p>{message}</p> </> : <BetMenu setBet={enterBet} wallet={wallet} />}
+		</div>
+		</div>
+	);
 }
 
 export default Blackjack;
