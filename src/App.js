@@ -8,6 +8,7 @@ import GameSelect from './GameSelect';
 import Roulette from './Roulette';
 import Blackjack from './Blackjack';
 import Dice from './Dice';
+import Nav from './Nav';
 
 //data will be the string we send from our server
 const apiCall = () => {
@@ -23,6 +24,7 @@ export default function App() {
 	const [wallet, setWallet] = useState(1000);
 	return (
 		<div className="App">
+		<Nav wallet={wallet}/>
 		<header>
 		<title>Casino</title>
 		</header>
