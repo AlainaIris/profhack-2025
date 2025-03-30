@@ -1,12 +1,7 @@
 import axios from 'axios';
 import './App.css';
 import useSSE from './useSSE';
-<<<<<<< HEAD
-import {useState} from 'react';
-=======
-import logo from './casino.jpg';
 import {useState, useEffect} from 'react';
->>>>>>> 4493f43 (audio)
 import Home from './Home';
 import GameSelect from './GameSelect';
 import Roulette from './Roulette';

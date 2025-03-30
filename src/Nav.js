@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import moneyBag from './Navigation/money_bag.png';
 import blueChip from './Navigation/bluechip-removebg-preview.png';
@@ -26,17 +25,4 @@ export default function Nav({ wallet, setScreen }) {
       </div>
     </nav>
   );
-=======
-export default function Nav({wallet, setScreen}) {
-	return (
-		<nav>
-			<div className='nav-op' onClick={() => setScreen(0)}>Home</div>
-			<div className='nav-op' onClick={() => setScreen(2)}>Blackjack</div>
-			<div className='nav-op' onClick={() => setScreen(3)}>Craps</div>
-			<div>
-				Money: {wallet}
-			</div>
-		</nav>
-	)
->>>>>>> 4493f43 (audio)
 }

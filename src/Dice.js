@@ -149,11 +149,8 @@ ${point} again.`;
 
 	return (
 		<div id='craps'>
-<<<<<<< HEAD
 			<div id="craps-title">Craps</div>
-=======
 		<audio id='die-audio' src={audio}></audio>
->>>>>>> 4493f43 (audio)
 		{
 			betSet ?
 			<div>
