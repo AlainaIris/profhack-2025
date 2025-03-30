@@ -1,0 +1,12 @@
+#craps {
+	position: absolute;
+	left: 15vw;
+	top: 15vh;
+	background-color: green;
+	width: 70vw;
+	height: 70vh;
+}
+
+.dice {
+	background-color: red;
+}

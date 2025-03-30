@@ -20,7 +20,7 @@ const apiCall = () => {
 export default function App() {
 	const { data, error } = useSSE('http://localhost:8080/events');
 	const [gameState, setGameState] = useState(0);
-	console.log(data);
+	const [wallet, setWallet] = useState(1000);
 	return (
 		<div className="App">
 		<header>
@@ -28,7 +28,7 @@ export default function App() {
 		</header>
 		{
 			gameState == 0 ? <Home setter={setGameState} /> : gameState == 1 ? <GameSelect setter={setGameState}/> :
-			gameState == 2 ? <Blackjack /> : gameState == 3 ? <Roulette /> : gameState == 4 ? <Dice/> : <></>
+			gameState == 2 ? <Blackjack /> : gameState == 3 ? <Roulette /> : gameState == 4 ? <Dice wallet={wallet} setWallet={setWallet}/> : <></>
 		}
 		</div>
 	);
