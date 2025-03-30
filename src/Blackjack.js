@@ -1,111 +1,92 @@
 import React, { useState } from 'react';
-import { cardDeck, shuffleDeck, dealCard, mapCardToImage } from './cards';
 import './Blackjack.css';
+import { shuffleDeck, dealCard, calculateScore } from './cards';
 
-export default function Blackjack() {
-  const [deck, setDeck] = useState(shuffleDeck(cardDeck));
-  const [playerHand, setPlayerHand] = useState([dealCard(deck), dealCard(deck)]);
-  const [dealerHand, setDealerHand] = useState([dealCard(deck)]);
+function Blackjack() {
+  const [playerHand, setPlayerHand] = useState([]);
+  const [dealerHand, setDealerHand] = useState([]);
+  const [deck, setDeck] = useState(shuffleDeck());
+  const [playerScore, setPlayerScore] = useState(0);
+  const [dealerScore, setDealerScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [winner, setWinner] = useState('');
+  const [message, setMessage] = useState('');
 
-  const calculateScore = (hand) => {
-    let score = 0;
-    let aceCount = 0;
-    hand.forEach(card => {
-      let value = card.slice(1);
-      if (['J', 'Q', 'K'].includes(value)) value = 10;
-      else if (value === 'A') {
-        value = 11;
-        aceCount++;
-      } else value = parseInt(value);
-      score += value;
-    });
-
-    while (score > 21 && aceCount > 0) {
-      score -= 10;
-      aceCount--;
-    }
-    return score;
+  const startGame = () => {
+    const newDeck = shuffleDeck();
+    setDeck(newDeck);
+    setPlayerHand([dealCard(newDeck), dealCard(newDeck)]);
+    setDealerHand([dealCard(newDeck), dealCard(newDeck)]);
+    setGameOver(false);
+    setMessage('');
+    setPlayerScore(calculateScore(playerHand));
+    setDealerScore(calculateScore(dealerHand));
   };
 
   const hit = () => {
     if (gameOver) return;
     const newCard = dealCard(deck);
-    const newHand = [...playerHand, newCard];
-    setPlayerHand(newHand);
-    setDeck(deck);
-
-    if (calculateScore(newHand) > 21) {
+    const newPlayerHand = [...playerHand, newCard];
+    setPlayerHand(newPlayerHand);
+    setPlayerScore(calculateScore(newPlayerHand));
+    if (playerScore > 21) {
+      setMessage('You bust! Dealer wins.');
       setGameOver(true);
-      setWinner('Dealer Wins!');
     }
   };
 
   const stand = () => {
     if (gameOver) return;
-    let dealerNewHand = [...dealerHand];
+    let newDealerHand = [...dealerHand];
+    let newDealerScore = dealerScore;
 
-    while (calculateScore(dealerNewHand) < 17) {
-      dealerNewHand.push(dealCard(deck));
+    // Dealer logic
+    while (newDealerScore < 17) {
+      const newCard = dealCard(deck);
+      newDealerHand = [...newDealerHand, newCard];
+      newDealerScore = calculateScore(newDealerHand);
     }
 
-    setDealerHand(dealerNewHand);
-    setGameOver(true);
+    setDealerHand(newDealerHand);
+    setDealerScore(newDealerScore);
 
-    const playerScore = calculateScore(playerHand);
-    const dealerScore = calculateScore(dealerNewHand);
-
-    if (dealerScore > 21 || playerScore > dealerScore) {
-      setWinner('Player Wins!');
-    } else if (playerScore < dealerScore) {
-      setWinner('Dealer Wins!');
+    if (newDealerScore > 21 || playerScore > newDealerScore) {
+      setMessage('You win!');
+    } else if (playerScore === newDealerScore) {
+      setMessage('It\'s a draw!');
     } else {
-      setWinner('It’s a Draw!');
+      setMessage('Dealer wins!');
     }
-  };
 
-  const restartGame = () => {
-    setDeck(shuffleDeck(cardDeck));
-    setPlayerHand([dealCard(deck), dealCard(deck)]);
-    setDealerHand([dealCard(deck)]);
-    setGameOver(false);
-    setWinner('');
+    setGameOver(true);
   };
 
   return (
     <div className="blackjack-container">
       <h1>Blackjack</h1>
-
-      <div className="game-section">
-        <h2>Dealer's Hand</h2>
-        <div className="cards">
-          {dealerHand.map((card, index) => (
-            <img key={index} src={mapCardToImage(card)} alt={card} className="card" />
-          ))}
-        </div>
-
-        <h2>Your Hand</h2>
-        <div className="cards">
+      <div className="hands">
+        <div className="player-hand">
+          <h2>Player's Hand</h2>
           {playerHand.map((card, index) => (
-            <img key={index} src={mapCardToImage(card)} alt={card} className="card" />
+            <img key={index} src={`./PNG-cards-1.3/${card}.png`} alt={card} />
           ))}
+          <p>Score: {playerScore}</p>
         </div>
-
-        <h3>Your Score: {calculateScore(playerHand)}</h3>
-
-        {!gameOver ? (
-          <div className="actions">
-            <button onClick={hit}>Hit</button>
-            <button onClick={stand}>Stand</button>
-          </div>
-        ) : (
-          <div className="game-outcome">
-            <h2>{winner}</h2>
-            <button onClick={restartGame} className="reset-button">Restart Game</button>
-          </div>
-        )}
+        <div className="dealer-hand">
+          <h2>Dealer's Hand</h2>
+          {dealerHand.map((card, index) => (
+            <img key={index} src={`./PNG-cards-1.3/${card}.png`} alt={card} />
+          ))}
+          <p>Score: {dealerScore}</p>
+        </div>
       </div>
+      <div className="actions">
+        <button onClick={hit} disabled={gameOver}>Hit</button>
+        <button onClick={stand} disabled={gameOver}>Stand</button>
+        {gameOver && <button onClick={startGame}>Restart Game</button>}
+      </div>
+      <p>{message}</p>
     </div>
   );
 }
+
+export default Blackjack;
