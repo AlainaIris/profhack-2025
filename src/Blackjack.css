@@ -8,15 +8,15 @@ body, html {
 
 .blackjack-container {
   display: flex;
-  height: 100vh;  /* Full viewport height */
+  height: 90vh;  /* Full viewport height */
   background-image: url('./table_background.png');
   background-size: 100% 95%;  /* Background image */
   color: black;
-  padding: 20px;
+  padding-bottom: 0vh;
 }
 
 .blackjack-wrap {
-  height: 60%;
+  height: 50%;
   width: 100%;
   color: white;
 }
@@ -25,7 +25,7 @@ body, html {
   display: flex;
   justify-content: space-between; /* This spreads the hands apart */
   width: 100%;
-  margin-top: 60px; /* Increased space from other content */
+  margin-top: 20px; /* Increased space from other content */
 }
 
 .player-hand, .dealer-hand {
