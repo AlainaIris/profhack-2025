@@ -16,6 +16,8 @@ function Blackjack({wallet, setWallet, streak, setStreak, pSetters}) {
 	const [gameOver, setGameOver] = useState(false);
 	const [betSet, setBetSet] = useState(false);
 	const [bet, setBet] = useState(0);
+	const [audio, setAudio] = useState(null);
+	const [playing, setPlaying] = useState(false);
 
 	const [message, setMessage] = useState('');
 	const [showDealerCard, setShowDealerCard] = useState(false);
@@ -45,9 +47,17 @@ function Blackjack({wallet, setWallet, streak, setStreak, pSetters}) {
                 } else {
                         text = LOSING_STREAK_3;
                 }
-                console.log(1);
-                pSetters[0](text);
+                pSetters[0](text[0]);
+		setPlaying(true);
+		setAudio(text[1]);
         }
+
+	useEffect(() => {
+		let s = document.getElementById('bj-a');
+		if (playing && s) {
+			s.play();
+		}
+	}, [audio, playing]);
 
 	        function randWin() {
                 let wins = [WIN_1, WIN_2, WIN_3];
@@ -190,6 +200,7 @@ function Blackjack({wallet, setWallet, streak, setStreak, pSetters}) {
 	return (
 		<div className="blackjack-container">
 		<div className="blackjack-wrap">
+		<audio id='bj-a' src={audio}></audio>
 		<h1>Blackjack</h1>
 		{betSet ? <>
 			<div className="hands">

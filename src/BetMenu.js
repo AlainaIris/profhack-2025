@@ -1,4 +1,5 @@
 import {BET_SET} from './text'
+
 export default function BetMenu({setBet, wallet, pSetters}) {
 	pSetters[0](BET_SET);
 

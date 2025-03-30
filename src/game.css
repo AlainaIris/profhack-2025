@@ -1,12 +1,13 @@
 #game-list {
 	display: grid;
-	grid-template-columns: 30% 30% 30%;
+	grid-template-columns: 1fr 1fr;
 	grid-gap: 20px;
-	width: 100%;
+	width: 60%;
+	margin-left: 20%;
 }
 
 .game {
-	background-color: #bbb;
+	background-color: #555;
 	width: 30vw;
 	height: 70vh;
 }

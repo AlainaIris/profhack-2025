@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import './craps.css'
 import RollingDie from './RollingDie';
 import StaticDie from './StaticDie';
@@ -17,6 +17,7 @@ function rollDie() {
 
 // Function to roll two dice
 export default function Dice({wallet, setWallet, streak, setStreak, pSetters}) {
+	const [audio, setAudio] = useState();
 	const [buttonText, setButtonText] = useState("Roll");
 	const [resultText, setResultText] = useState("Roll to begin");
 	const [betSet, setBetSet] = useState(false);
@@ -24,6 +25,7 @@ export default function Dice({wallet, setWallet, streak, setStreak, pSetters}) {
 	const [point, setPoint] = useState(0);
 	const [d1, setD1] = useState(0);
 	const [d2, setD2] = useState(0);
+	const [playing, setPlaying] = useState(false);
 
 	function rollDices() {
 		let r1 = rollDie();
@@ -88,9 +90,20 @@ export default function Dice({wallet, setWallet, streak, setStreak, pSetters}) {
 		} else {
 			text = LOSING_STREAK_3;
 		}
-		console.log(1);
-		pSetters[0](text);
+		console.log(text);
+		console.log(pSetters);
+		setPlaying(true);
+		pSetters[0](text[0]);
+		let s = document.getElementById('die-audio');
+		setAudio(text[1]);
 	}
+
+	useEffect(() => {
+		let s = document.getElementById('die-audio');
+		if (playing && s) {
+			s.play();
+		}
+	}, [audio, playing]);
 
 	function checkRoll() {
 		let roll = rollDices();
@@ -136,7 +149,11 @@ ${point} again.`;
 
 	return (
 		<div id='craps'>
+<<<<<<< HEAD
 			<div id="craps-title">Craps</div>
+=======
+		<audio id='die-audio' src={audio}></audio>
+>>>>>>> 4493f43 (audio)
 		{
 			betSet ?
 			<div>

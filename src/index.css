@@ -35,6 +35,7 @@ body, html {
   .menu-bar .red-chip,
   .menu-bar .green-chip {
 	position: absolute;
+<<<<<<< HEAD
 	z-index: 1; /* Places images behind text */
 	opacity: 1;  /* Full opacity for better visibility */
 	width: 50px;  /* Enlarged size for better visibility */
@@ -76,3 +77,27 @@ body, html {
 	position: relative;
   }
   
+=======
+	z-index: 3;
+	width: 16vw;
+	height: 80vh;
+	top: 10vh;
+	display: grid;
+	background-color: red;
+	grid-template-rows: 20vh 20vh 20vh 20vh;
+}
+
+.nav-op {
+	font-size: 20px;
+	line-height: 20vh;
+}
+
+#bet-menu {
+	background-color: rgba(0, 0, 0, 0.2);
+	position: absolute;
+	height: 40%;
+	width: 40%;
+	top: 30%;
+	left: 30%;
+}
+>>>>>>> 4493f43 (audio)

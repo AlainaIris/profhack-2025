@@ -1,7 +1,12 @@
 import axios from 'axios';
 import './App.css';
 import useSSE from './useSSE';
+<<<<<<< HEAD
 import {useState} from 'react';
+=======
+import logo from './casino.jpg';
+import {useState, useEffect} from 'react';
+>>>>>>> 4493f43 (audio)
 import Home from './Home';
 import GameSelect from './GameSelect';
 import Roulette from './Roulette';
@@ -10,7 +15,10 @@ import Dice from './Dice';
 import Nav from './Nav';
 import Prompt from './Prompt';
 import defD from './dealer/default.jpg';
-import {  WEBSITE_WELCOME,
+import audo from './MUSIC/786276__sergequadrado__smooth-loop.mp3';
+import bg from './mp3s/344907__lg__20120304-las-vegas-chaos-02.wav';
+
+import {  WELCOME,
   LOSE_1,
   LOSE_2,
   LOSE_3,
@@ -37,14 +45,30 @@ export default function App() {
 	const { data, error } = useSSE('http://localhost:8080/events');
 	const [gameState, setGameState] = useState(0);
 	const [wallet, setWallet] = useState(1000);
-	const [promptMsg, setPM] = useState(WEBSITE_WELCOME);
+	const [promptMsg, setPM] = useState(WELCOME[0]);
 	const [showPrompt, setPS] = useState(true);
 	const [img, setIMG] = useState(defD);
-	const pS = [setPM, setIMG, setPS];
+	const [audio, setAudio] = useState(WELCOME[1]);
+	const pS = [setPM, setIMG, setPS, setAudio];
 	const [streak, setStreak] = useState(0);
+	const [playing, setPlaying] = useState(false);
+	function playA() {
+		document.getElementById('audo').play();
+		let bg = document.getElementById('bg')
+		bg.play();
+		setPlaying(true);
+		setAudio(WELCOME[1]);
+		bg.volume = 0.3;
+		if (!playing) {
+		let s = document.getElementById('speach');
+		s.play();}
+	}
 
 	return (
-		<div className="App">
+		<div className="App" onClick={() => {playA()}}>
+		<audio id='audo' src={audo}></audio>
+		<audio id='speach' src={audio}></audio>
+		<audio id='bg' src={bg}></audio>
 		<Nav setScreen={setGameState} wallet={wallet}/>
 		{showPrompt ?
 		<Prompt msg={promptMsg} pos={{bottom: "30px", left: "15%"}} img={img}/> : <></>}
