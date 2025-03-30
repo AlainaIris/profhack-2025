@@ -1,6 +1,7 @@
 import {useState} from 'react'
 
-export default function Die({val}) {
+
+export default function RollingDie({val}) {
 	const [value, setValue] = useState(val);
 	let interval;
 	if (val > 0) {
@@ -10,7 +11,7 @@ export default function Die({val}) {
 	}
 	return (
 		<div className='dice'>
-		<p id=''>{value}</p>
+		<p className='dice-num'>{value}</p>
 		</div>
 	)
 }

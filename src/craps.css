@@ -7,8 +7,27 @@
 	height: 70vh;
 }
 
+#die-set {
+	display: grid;
+	width: 60%;
+	margin-left: 20%;
+	grid-template-columns: 1fr 1fr;
+	height: 40vh;
+}
+
 .dice {
+	position: relative;
+	left: 35%;
+	top: 40%;
 	background-color: red;
 	height: 60px;
 	width: 60px;
+box-shadow: 6px 3px 3px rgba(70, 30, 30, 0.7);
+}
+
+.dice-num {
+	color: white;
+	font-size: 40px;
+	margin: 0px;
+	line-height: 60px;
 }
