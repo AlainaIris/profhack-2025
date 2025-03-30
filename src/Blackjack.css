@@ -8,9 +8,6 @@ body, html {
 
 .blackjack-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Centers content */
   height: 100vh;  /* Full viewport height */
   background-image: url('./table_background.png');
   background-size: 100% 95%;  /* Background image */
@@ -19,7 +16,8 @@ body, html {
 }
 
 .blackjack-wrap {
-  height: 80%;
+  height: 60%;
+  width: 100%;
   color: white;
 }
 

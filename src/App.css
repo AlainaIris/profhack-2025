@@ -28,7 +28,7 @@ html {
 	display: grid;
 	grid-template-columns: 25% 75%;
 	position: absolute;
-	width: 60vw;
+	width: 70vw;
 	z-index: 4;
 }
 
@@ -42,9 +42,18 @@ html {
 	color: black;
 	text-shadow: none;
 	font-size: 20px;
-	width: 100%;
-	background-color: #CCC;
-	padding: 20px 10px;
+	width: 80%;
+	color: white;
+	padding: 30px 80px;
+	background-image: url('./dealer/dbox.png');
+	background-size: 100% 100%;
+}
+
+#pad {
+	width: 85%;
+	position: relative;
+	left: 15%;
+	top: 15%;
 }
 
 #dealer-img {

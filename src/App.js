@@ -66,7 +66,7 @@ export default function App() {
 		<audio id='bg' src={bg}></audio>
 		<Nav setScreen={setGameState} wallet={wallet}/>
 		{showPrompt ?
-		<Prompt msg={promptMsg} pos={{bottom: "30px", left: "15%"}} img={img}/> : <></>}
+		<Prompt msg={promptMsg} pos={{bottom: "30px", left: "10%"}} img={img}/> : <></>}
 		<header>
 		<title>Casino</title>
 		</header>
