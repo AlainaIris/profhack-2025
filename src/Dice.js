@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import './craps.css'
+import Die from './Die'
 // Dice Gambling Game
 
 
@@ -20,11 +21,8 @@ export default function Dice({wallet, setWallet}) {
 	const [betSet, setBetSet] = useState(false);
 	const [bet, setBet] = useState(0);
 	const [point, setPoint] = useState(0);
-	const [d1, setD1] = useState(0);
+
 	function rollDices() {
-		for (let i = 0; i < 100; i++) {
-			setD1(i);
-		}
 		return rollDice();
 	}
 
@@ -81,10 +79,11 @@ ${point} again.`;
 
 	return (
 		<div id='craps'>
+		<Die val={0} />
+		<Die val={0} />
 		{
 			betSet ?
 			<div>
-				<div id='dice-1'>{d1}</div>
 				<div id='dice-2'>{}</div>
 				<p>{resultText}</p>
 				<button onClick={() => checkRoll()}>{buttonText}</button>
